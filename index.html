@@ -1,0 +1,50 @@
+<script>const url = 'https://meteamedia.org/wp-admin/admin-ajax.php';
+const headers = {
+ "accept": "*/*",
+ "accept-language": "en-US,en;q=0.9",
+ "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+ "sec-ch-ua": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Google Chrome\";v=\"120\"",
+ "sec-ch-ua-mobile": "?0",
+ "sec-ch-ua-platform": "\"Linux\"",
+ "sec-fetch-dest": "empty",
+ "sec-fetch-mode": "cors",
+ "sec-fetch-site": "same-origin",
+ "x-requested-with": "XMLHttpRequest"
+};
+const bodyData = 'action=recommendpost&postid=25064&change=increment&like=4fbe72f2e321d6832f81758ae90eee7847dededc80c9276a205aa39f4a51c2bf++&remember=1%E2%80%8B&nonce=3c418862ed';
+
+async function sendRequest() {
+ try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: bodyData,
+      mode: 'cors',
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    console.log('Request successful');
+ } catch (error) {
+    console.error('There was a problem with the fetch operation: ', error);
+ }
+}
+
+// Function to repeat the request
+async function repeatRequest(times) {
+ for (let i = 0; i < times; i++) {
+    await sendRequest();
+ }
+}
+
+// Call the function to repeat the request 1,000,000 times
+repeatRequest(1000000).then(() => {
+ console.log('All requests completed');
+}).catch((error) => {
+ console.error('Error during repeated requests:', error);
+});
+
+</script>
